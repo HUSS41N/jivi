@@ -44,7 +44,7 @@ const RangeSlider = ({ label, min, max, value, setValue, style }) => {
   };
 
   return (
-    <div className="space-y-2 my-3">
+    <div className="space-y-2 my-5">
       <label
         htmlFor="range-slider"
         className="block text-sm font-medium text-gray-700"

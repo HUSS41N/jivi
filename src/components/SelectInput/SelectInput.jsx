@@ -2,18 +2,18 @@ import React from "react";
 
 const SelectInput = ({ label, icon, val, setVal, options, placeholder }) => {
   return (
-    <div className="flex flex-col space-y-1">
+    <div className="flex flex-col space-y-1 my-5">
       {label && (
         <label className="text-sm font-semibold text-gray-700">{label}</label>
       )}
-      <div className="relative flex items-center border border-gray-300 rounded-lg">
-        <img src={icon} alt="Calendar" className="w-5 h-5 ml-2" />
+      <div className="relative flex items-center rounded-lg bg-custom-bg" style={{ height: "55px" }}> 
+        <img src={icon} alt="Icon" className="w-5 h-5 ml-2 object-cover" /> 
         <select
           value={val}
           onChange={(e) => setVal(e.target.value)}
-          className="flex-1 p-2 appearance-none outline-none bg-transparent cursor-pointer"
+          className="flex-1 p-2 appearance-none outline-none bg-transparent cursor-pointer h-full w-full"
         >
-          <option value="" disabled>
+          <option value="" disabled hidden={!!val}>
             {placeholder}
           </option>
           {options.map((option) => (

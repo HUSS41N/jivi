@@ -144,7 +144,7 @@ const Details = () => {
   );
 
   return (
-    <div className="details-container max-w-xs w-full flex flex-col justify-between">
+    <div className="details-container w-full flex flex-col justify-between">
       <div>
         {currentStep === 1 && <StepOne />}
         {currentStep === 2 && <StepTwo />}
@@ -156,14 +156,14 @@ const Details = () => {
         {currentStep < 5 ? (
           <Button
             clickHandler={handleClickNext}
-            style={{ width: "100%", height: "50px" }}
+            style={{ width: "100%", height: "70px" }}
           >
             Next
           </Button>
         ) : (
           <Button
             clickHandler={() => submitHandler()}
-            style={{ width: "100%", height: "50px" }}
+            style={{ width: "100%", height: "70px" }}
           >
             Submit
           </Button>
@@ -173,7 +173,7 @@ const Details = () => {
             clickHandler={handleClickBack}
             style={{
               width: "100%",
-              height: "50px",
+              height: "70px",
               backgroundColor: "#DCE1E8",
             }}
           >
