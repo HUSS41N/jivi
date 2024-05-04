@@ -1,6 +1,20 @@
-.separator{
-    background-color: #edf5ff !important;
-    height: 2px;
-    width: 330px;
-    margin-top: 10px;
+.separator {
+  background-color: #edf5ff !important;
+  height: 2px;
+  width: 330px;
+  margin-top: 10px;
+}
+.layout-container {
+  position: relative;
+  .header {
+    text-align: center;
+    padding: 1rem 0;
+    background-color: white;
+  }
+  .content-container {
+    margin-top: 4rem;
+    width: 100%;
+    height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
 }

@@ -1,3 +1,3 @@
 export const APIs = {
-  POST_URL: "",
+  POST_URL: "/post",
 };

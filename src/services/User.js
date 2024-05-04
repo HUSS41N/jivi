@@ -6,3 +6,4 @@ class UserService {
     return sharedConfig.post(APIs.POST_URL, data);
   }
 }
+export default new UserService();

@@ -13,7 +13,10 @@ import "./details.scss";
 import VoiceRecorder from "../../components/VoiceRecorder/VoiceRecorder";
 import Preview from "../../components/Preview/Preview";
 import Weight from "../../components/WeightSelector/Weight";
+import UserService from "../../services/User";
+import { useNavigate } from "react-router";
 const Details = () => {
+  const navigate = useNavigate()
   const [currentStep, setCurrentStep] = useState(1);
   const [heartRate, setHeartRate] = useState(80);
   const [bloodPressure, setBloodPressure] = useState(140);
@@ -39,6 +42,16 @@ const Details = () => {
     if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
 
+  const submitHandler = async () => {
+    const response = await UserService.postUserData({
+      HELLO: "WORLD",
+    });
+    console.log("Response: ", response);
+    if(response.status == 200){
+      navigate('/success')
+    }
+  };
+
   const StepOne = () => (
     <>
       <RangeSlider
@@ -47,7 +60,7 @@ const Details = () => {
         max={120}
         value={heartRate}
         setValue={setHeartRate}
-        style={{highlightColor:"#0F67FE",thumbColor:"#0F67FE"}}
+        style={{ highlightColor: "#0F67FE", thumbColor: "#0F67FE" }}
       />
       <RangeSlider
         label="Blood Pressure"
@@ -55,7 +68,7 @@ const Details = () => {
         max={150}
         value={bloodPressure}
         setValue={setBloodPressure}
-        style={{highlightColor:"#FA4D5E"}}
+        style={{ highlightColor: "#FA4D5E" }}
       />
       <RangeSlider
         label="Other Blood Pressure"
@@ -63,7 +76,7 @@ const Details = () => {
         max={80}
         value={anotherBloodPressure}
         setValue={setAnotherBloodPressure}
-        style={{highlightColor:"#FA4D5E"}}
+        style={{ highlightColor: "#FA4D5E" }}
       />
       <InputText
         label="Username"
@@ -93,13 +106,16 @@ const Details = () => {
   const StepTwo = () => (
     <>
       {/* <WeightSelector currentWeight={currentWeight} setCurrentWeight={setCurrentWeight}/> */}
-      <Weight  initialWeight={currentWeight} setCurrentWeight={setCurrentWeight}/>
+      <Weight
+        initialWeight={currentWeight}
+        setCurrentWeight={setCurrentWeight}
+      />
     </>
   );
 
   const StepThree = () => (
     <>
-      <AgeSelector  age={age} setAge={setAge}/>
+      <AgeSelector age={age} setAge={setAge} />
     </>
   );
 
@@ -146,7 +162,7 @@ const Details = () => {
           </Button>
         ) : (
           <Button
-            clickHandler={() => console.log("Submit Final Data ", recordedData)}
+            clickHandler={() => submitHandler()}
             style={{ width: "100%", height: "50px" }}
           >
             Submit
