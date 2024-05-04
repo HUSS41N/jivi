@@ -3,13 +3,21 @@ import RangeSlider from "../../components/RangeSlider/RangeSlider";
 import InputText from "../../components/InputText/InputText";
 import UserIcon from "../../assets/user.svg";
 import CalendarIcon from "../../assets/calendar.svg";
+import GenderIcon from "../../assets/gender.svg";
 import DateOfBirthInput from "../../components/DateOfBirthInput/DateOfBirthInput";
+import SelectInput from "../../components/SelectInput/SelectInput";
 const Details = () => {
   const [heartRate, setHeartRate] = useState(0);
   const [bloodPressure, setBloodPressure] = useState(0);
   const [anotherBloodPressure, setAnotherBloodPressure] = useState(0);
   const [userName, setUserName] = useState("");
   const [dob, setDob] = useState("");
+  const [gender,setGender] = useState("Male")
+  const options = [
+    { value: 'male', label: 'Male' },
+    { value: 'female', label: 'Female' },
+    { value: 'other', label: 'Other' },
+  ];
 
   return (
     <div>
@@ -47,6 +55,14 @@ const Details = () => {
         val={dob}
         setVal={setDob}
         placeholder="Select your date of birth"
+      />
+        <SelectInput
+        label="Gender"
+        icon={GenderIcon}
+        val={gender}
+        setVal={setGender}
+        options={options}
+        placeholder="Select a Gender"
       />
     </div>
   );
