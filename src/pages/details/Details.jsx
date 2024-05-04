@@ -19,7 +19,7 @@ const Details = () => {
   const [anotherBloodPressure, setAnotherBloodPressure] = useState(70);
   const [userName, setUserName] = useState("");
   const [dob, setDob] = useState("");
-  const [age, setAge] = useState(18);
+  const [age, setAge] = useState(24);
   const [currentWeight, setCurrentWeight] = useState(70);
   const [gender, setGender] = useState("Male");
   const [recordedData, setRecordedData] = useState("");
