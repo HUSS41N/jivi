@@ -12,18 +12,19 @@ const Preview = ({
   age
 }) => {
   return (
-    <div>
-      <p>Please confirm your details to continue.</p>
-      <div>
-        <p>HeartRate : {heartRate}</p>
-        <p>Blood Pressure :</p>
-        <p>Systolic : {bloodPressure}</p>
-        <p>Diastolic :{anotherBloodPressure}</p>
-        <p>Name: {userName}</p>
-        <p>Date of birth: {dob}</p> <p>Gender: {gender}</p>
-        <p>Weight : {weight}</p>
-        <p>Age : {age}</p>
-        <p>Custom message : </p>
+    <div className="">
+      <p className="mb-4">Please confirm your details to continue.</p>
+      <div className="space-y-2">
+        <div><span className="font-bold w-32 inline-block">HeartRate:</span> <span>{heartRate}</span></div>
+        <div><span className="font-bold w-32 inline-block">Blood Pressure:</span></div>
+        <div><span className="font-bold w-32 inline-block">Systolic:</span> <span>{bloodPressure}</span></div>
+        <div><span className="font-bold w-32 inline-block">Diastolic:</span> <span>{anotherBloodPressure}</span></div>
+        <div><span className="font-bold w-32 inline-block">Name:</span> <span>{userName}</span></div>
+        <div><span className="font-bold w-32 inline-block">Date of birth:</span> <span>{dob}</span></div>
+        <div><span className="font-bold w-32 inline-block">Gender:</span> <span>{gender}</span></div>
+        <div><span className="font-bold w-32 inline-block">Weight:</span> <span>{weight}</span></div>
+        <div><span className="font-bold w-32 inline-block">Age:</span> <span>{age}</span></div>
+        <div><span className="font-bold w-32 inline-block">Custom message:</span> <span>{recordedData}</span></div>
       </div>
     </div>
   );
