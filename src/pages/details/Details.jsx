@@ -9,7 +9,7 @@ import SelectInput from "../../components/SelectInput/SelectInput";
 import Button from "../../components/Button/Button";
 import WeightSelector from "../../components/WeightSelector/WeightSelector";
 import AgeSelector from "../../components/AgeSelector/AgeSelector";
-import "./details.scss"
+import "./details.scss";
 const Details = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [heartRate, setHeartRate] = useState(80);
@@ -100,18 +100,6 @@ const Details = () => {
         {currentStep === 3 && <StepThree />}
       </div>
       <div className="flex flex-col space-y-4 mt-4">
-        {currentStep > 1 && (
-          <Button
-            clickHandler={handleClickBack}
-            style={{
-              width: "100%",
-              height: "50px",
-              backgroundColor: "#DCE1E8",
-            }}
-          >
-            Back
-          </Button>
-        )}
         {currentStep < 3 ? (
           <Button
             clickHandler={handleClickNext}
@@ -125,6 +113,18 @@ const Details = () => {
             style={{ width: "100%", height: "50px" }}
           >
             Submit
+          </Button>
+        )}
+        {currentStep > 1 && (
+          <Button
+            clickHandler={handleClickBack}
+            style={{
+              width: "100%",
+              height: "50px",
+              backgroundColor: "#DCE1E8",
+            }}
+          >
+            Back
           </Button>
         )}
       </div>
