@@ -104,7 +104,7 @@ const VoiceRecorder = ({ setRecordedData }) => {
 
   return (
     <div className="">
-      <h1>Record your custom message. 🎙️</h1>
+      <h1 className="text-xl font-bold details-header">Record your custom message.</h1>
       <div
         ref={waveformRef}
         className="wavesurfer"
