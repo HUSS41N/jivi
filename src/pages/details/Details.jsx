@@ -16,7 +16,7 @@ import Weight from "../../components/WeightSelector/Weight";
 import UserService from "../../services/User";
 import { useNavigate } from "react-router";
 const Details = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [heartRate, setHeartRate] = useState(80);
   const [bloodPressure, setBloodPressure] = useState(140);
@@ -28,6 +28,7 @@ const Details = () => {
   const [gender, setGender] = useState("Male");
   const [recordedData, setRecordedData] = useState("");
   const [isRecording, setIsRecording] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const options = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
@@ -43,12 +44,35 @@ const Details = () => {
   };
 
   const submitHandler = async () => {
-    const response = await UserService.postUserData({
-      HELLO: "WORLD",
-    });
-    console.log("Response: ", response);
-    if(response.status == 200){
-      navigate('/success')
+    setIsSubmitting(true); // Set the pending state to true when submission starts
+    const formData = new FormData();
+    formData.append("heartRate", heartRate);
+    formData.append("bloodPressure", bloodPressure);
+    formData.append("anotherBloodPressure", anotherBloodPressure);
+    formData.append("userName", userName);
+    formData.append("dob", dob);
+    formData.append("age", age);
+    formData.append("currentWeight", currentWeight);
+    formData.append("gender", gender);
+    formData.append("recordedData", recordedData);
+
+    try {
+      const response = await UserService.postUserData(formData);
+      console.log("Response: ", response);
+
+      if (response.status === 200) {
+        navigate("/success");
+      } else {
+        console.error("Failed to submit data:", response.statusText);
+        alert("Failed to submit data. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during data submission:", error);
+      alert(
+        "An error occurred while submitting your data. Please check your connection and try again."
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -164,8 +188,9 @@ const Details = () => {
           <Button
             clickHandler={() => submitHandler()}
             style={{ width: "100%", height: "70px" }}
+            disabled={isSubmitting}
           >
-            Submit
+             {isSubmitting ? 'Submitting...' : 'Submit'}
           </Button>
         )}
         {currentStep > 1 && (
