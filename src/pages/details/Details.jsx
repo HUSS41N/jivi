@@ -7,6 +7,8 @@ import GenderIcon from "../../assets/gender.svg";
 import DateOfBirthInput from "../../components/DateOfBirthInput/DateOfBirthInput";
 import SelectInput from "../../components/SelectInput/SelectInput";
 import Button from "../../components/Button/Button";
+import WeightSelector from "../../components/WeightSelector/WeightSelector";
+
 const Details = () => {
   const [heartRate, setHeartRate] = useState(80);
   const [bloodPressure, setBloodPressure] = useState(140);
@@ -75,6 +77,7 @@ const Details = () => {
         options={options}
         placeholder="Select a Gender"
       />
+      <WeightSelector />
       <Button
         clickHandler={handleClick}
         disabled={true}
