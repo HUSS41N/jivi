@@ -6,7 +6,7 @@ const Weight = ({
   initialUnit = "lbs",
   minWeight = 0,
   maxWeight = 140,
-  setCurrentWeight
+  setCurrentWeight,
 }) => {
   const [unit, setUnit] = useState(initialUnit);
   const [visibleCenter, setVisibleCenter] = useState(initialWeight);
@@ -50,6 +50,7 @@ const Weight = ({
         backgroundColor: "#242E49",
         borderRadius: "10px",
         border: "5px solid #EDF5FF",
+        marginTop:"20px"
       };
     }
     return {
@@ -70,12 +71,10 @@ const Weight = ({
 
   const handleNext = () => {
     setVisibleCenter((prev) => Math.min(prev + 1, maxWeight));
-    // handleWeightChange()
   };
 
   const handlePrev = () => {
     setVisibleCenter((prev) => Math.max(prev - 1, minWeight));
-    // handleWeightChange()
   };
 
   const startChangingWeight = (selectedWeight) => {
@@ -86,7 +85,7 @@ const Weight = ({
   };
   const stopChangingWeight = (selectedWeight) => {
     if (intervalRef.current) {
-      handleWeightChange()
+      handleWeightChange();
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
@@ -94,9 +93,9 @@ const Weight = ({
   console.log("visibleCenter", visibleWeights, visibleCenter);
   return (
     <div>
-      <div className="flex flex-col space-y-4">
+      <div className="flex flex-col space-y-4 mt-4">
         <h1 className="text-xl font-bold">What is your weight?</h1>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center mb-10">
           <Button clickHandler={toggleUnit} style={buttonStyleHandler("lbs")}>
             Lbs
           </Button>
@@ -104,14 +103,27 @@ const Weight = ({
             Kg
           </Button>
         </div>
-        <div className="text-center">
-          Current Weight: {displayWeight} {unit}
+        <div className="text-center mt-10">
+          <p className="flex justify-center items-center mt-10">
+            <span className=" current-weight font-bold text-5xl leading-tight tracking-tighter px-2">
+              {displayWeight}
+            </span>
+            <span className="current-unit font-semibold text-xl leading-snug tracking-tight">
+              {unit}
+            </span>
+          </p>
         </div>
       </div>
-      <div className="relative w-full flex items-center">
+      <div className="relative w-full flex items-center mt-20">
         <Button
           clickHandler={handlePrev}
-          style={{ width:"50px",backgroundColor:"#ffffff",border:"none",color:"#DCE1E8",padding: "5px", }}
+          style={{
+            width: "50px",
+            backgroundColor: "#ffffff",
+            border: "none",
+            color: "#DCE1E8",
+            padding: "5px",
+          }}
         >
           {"<"}
         </Button>
@@ -132,14 +144,16 @@ const Weight = ({
         </div>
         <Button
           clickHandler={handleNext}
-          style={{ width:"50px",backgroundColor:"#ffffff",border:"none",color:"#DCE1E8",padding: "5px",}}
+          style={{
+            width: "50px",
+            backgroundColor: "#ffffff",
+            border: "none",
+            color: "#DCE1E8",
+            padding: "5px",
+          }}
         >
           {">"}
         </Button>
-        {/* <div
-          className="absolute inset-0 mx-auto w-1.5 h-20 bg-blue-500"
-          style={{ left: "0%", transform: "translateX(-50%)" }}
-        ></div> */}
       </div>
     </div>
   );

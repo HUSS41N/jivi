@@ -1,5 +1,5 @@
 .weights {
-  border: 1px solid #BEC5D2;
+  border: 1px solid #bec5d2;
   height: 24px !important;
   margin: 3.5px !important;
 }
@@ -8,7 +8,14 @@
   border: 2px solid #5d6a85;
   margin: 3.5px !important;
 }
-.selected-weight{
-    height: 78px !important;
-    border: 3.5px solid #0F67FE !important;
+.selected-weight {
+  height: 78px !important;
+  border: 3.5px solid #0f67fe !important;
+}
+.current-weight {
+  color: #242e49;
+  margin-right: 10px;
+}
+.current-unit {
+  color: #5d6a85;
 }
