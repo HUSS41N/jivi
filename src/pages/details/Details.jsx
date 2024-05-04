@@ -10,6 +10,7 @@ import Button from "../../components/Button/Button";
 import WeightSelector from "../../components/WeightSelector/WeightSelector";
 import AgeSelector from "../../components/AgeSelector/AgeSelector";
 import "./details.scss";
+import VoiceRecorder from "../../components/VoiceRecorder/VoiceRecorder";
 const Details = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [heartRate, setHeartRate] = useState(80);
@@ -18,6 +19,8 @@ const Details = () => {
   const [userName, setUserName] = useState("");
   const [dob, setDob] = useState("");
   const [gender, setGender] = useState("Male");
+  const [recordedData,setRecordedData] = useState("");
+  const [isRecording, setIsRecording] = useState(false);
   const options = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
@@ -25,7 +28,7 @@ const Details = () => {
   ];
 
   const handleClickNext = () => {
-    if (currentStep < 3) setCurrentStep(currentStep + 1);
+    if (currentStep < 4) setCurrentStep(currentStep + 1);
   };
 
   const handleClickBack = () => {
@@ -92,15 +95,22 @@ const Details = () => {
     </>
   );
 
+  const StepFour = () => (
+    <>
+      <VoiceRecorder isRecording={isRecording} setIsRecording={setIsRecording} setRecordedData={setRecordedData}/>
+    </>
+  );
+
   return (
     <div className="details-container max-w-xs w-full flex flex-col justify-between p-2">
       <div>
         {currentStep === 1 && <StepOne />}
         {currentStep === 2 && <StepTwo />}
         {currentStep === 3 && <StepThree />}
+        {currentStep === 4 && <StepFour />}
       </div>
       <div className="flex flex-col space-y-4 mt-4">
-        {currentStep < 3 ? (
+        {currentStep < 4 ? (
           <Button
             clickHandler={handleClickNext}
             style={{ width: "100%", height: "50px" }}
@@ -109,7 +119,7 @@ const Details = () => {
           </Button>
         ) : (
           <Button
-            clickHandler={() => console.log("Submit Final Data")}
+            clickHandler={() => console.log("Submit Final Data ",recordedData)}
             style={{ width: "100%", height: "50px" }}
           >
             Submit
