@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Button from "../Button/Button";
 const WeightSelector = ({
-  initialWeight = 68, // default initial weight in kg
-  initialUnit = "lbs", // default unit
-  minWeight = 0, // minimum weight limit
-  maxWeight = 140, // maximum weight limit
+  initialWeight = 68, 
+  initialUnit = "lbs",
+  minWeight = 0, 
+  maxWeight = 140, 
 }) => {
   const [unit, setUnit] = useState(initialUnit);
   const [weightInKg, setWeightInKg] = useState(() =>
@@ -15,11 +15,11 @@ const WeightSelector = ({
   );
 
   useEffect(() => {
-    // Update display weight whenever the unit changes
+   
     if (unit === "lbs") {
-      setDisplayWeight(Math.round(weightInKg * 2.20462)); // Convert kg to lbs
+      setDisplayWeight(Math.round(weightInKg * 2.20462)); 
     } else {
-      setDisplayWeight(weightInKg); // Display in kg
+      setDisplayWeight(weightInKg); 
     }
   }, [unit, weightInKg]);
 
@@ -27,11 +27,11 @@ const WeightSelector = ({
     const newWeight = parseFloat(e.target.value);
     if (newWeight >= minWeight && newWeight <= maxWeight) {
       if (unit === "lbs") {
-        setWeightInKg(Math.round(newWeight / 2.20462)); // Convert and set in kg
-        setDisplayWeight(newWeight); // Directly set display weight in lbs
+        setWeightInKg(Math.round(newWeight / 2.20462)); 
+        setDisplayWeight(newWeight); 
       } else {
-        setWeightInKg(newWeight); // Set weight directly in kg
-        setDisplayWeight(newWeight); // Display the same weight
+        setWeightInKg(newWeight);
+        setDisplayWeight(newWeight); 
       }
     }
   };

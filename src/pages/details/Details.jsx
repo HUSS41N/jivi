@@ -12,6 +12,7 @@ import AgeSelector from "../../components/AgeSelector/AgeSelector";
 import "./details.scss";
 import VoiceRecorder from "../../components/VoiceRecorder/VoiceRecorder";
 import Preview from "../../components/Preview/Preview";
+import Layout from "../../components/Layout/Layout";
 const Details = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [heartRate, setHeartRate] = useState(80);
