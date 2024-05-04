@@ -46,6 +46,7 @@ const Details = () => {
         max={120}
         value={heartRate}
         setValue={setHeartRate}
+        style={{highlightColor:"#0F67FE",thumbColor:"#0F67FE"}}
       />
       <RangeSlider
         label="Blood Pressure"
@@ -53,6 +54,7 @@ const Details = () => {
         max={150}
         value={bloodPressure}
         setValue={setBloodPressure}
+        style={{highlightColor:"#FA4D5E"}}
       />
       <RangeSlider
         label="Other Blood Pressure"
@@ -60,6 +62,7 @@ const Details = () => {
         max={80}
         value={anotherBloodPressure}
         setValue={setAnotherBloodPressure}
+        style={{highlightColor:"#FA4D5E"}}
       />
       <InputText
         label="Username"
