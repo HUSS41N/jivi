@@ -8,6 +8,7 @@ import DateOfBirthInput from "../../components/DateOfBirthInput/DateOfBirthInput
 import SelectInput from "../../components/SelectInput/SelectInput";
 import Button from "../../components/Button/Button";
 import WeightSelector from "../../components/WeightSelector/WeightSelector";
+import AgeSelector from "../../components/AgeSelector/AgeSelector";
 
 const Details = () => {
   const [heartRate, setHeartRate] = useState(80);
@@ -78,6 +79,7 @@ const Details = () => {
         placeholder="Select a Gender"
       />
       <WeightSelector />
+      <AgeSelector />
       <Button
         clickHandler={handleClick}
         disabled={true}
