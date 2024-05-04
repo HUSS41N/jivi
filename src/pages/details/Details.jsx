@@ -7,7 +7,6 @@ import GenderIcon from "../../assets/gender.svg";
 import DateOfBirthInput from "../../components/DateOfBirthInput/DateOfBirthInput";
 import SelectInput from "../../components/SelectInput/SelectInput";
 import Button from "../../components/Button/Button";
-import WeightSelector from "../../components/WeightSelector/WeightSelector";
 import AgeSelector from "../../components/AgeSelector/AgeSelector";
 import "./details.scss";
 import VoiceRecorder from "../../components/VoiceRecorder/VoiceRecorder";
@@ -44,7 +43,7 @@ const Details = () => {
   };
 
   const submitHandler = async () => {
-    setIsSubmitting(true); // Set the pending state to true when submission starts
+    setIsSubmitting(true);
     const formData = new FormData();
     formData.append("heartRate", heartRate);
     formData.append("bloodPressure", bloodPressure);
@@ -129,7 +128,6 @@ const Details = () => {
 
   const StepTwo = () => (
     <>
-      {/* <WeightSelector currentWeight={currentWeight} setCurrentWeight={setCurrentWeight}/> */}
       <Weight
         initialWeight={currentWeight}
         setCurrentWeight={setCurrentWeight}
