@@ -12,7 +12,7 @@ import AgeSelector from "../../components/AgeSelector/AgeSelector";
 import "./details.scss";
 import VoiceRecorder from "../../components/VoiceRecorder/VoiceRecorder";
 import Preview from "../../components/Preview/Preview";
-import Layout from "../../components/Layout/Layout";
+import Weight from "../../components/WeightSelector/Weight";
 const Details = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [heartRate, setHeartRate] = useState(80);
@@ -92,7 +92,8 @@ const Details = () => {
 
   const StepTwo = () => (
     <>
-      <WeightSelector currentWeight={currentWeight} setCurrentWeight={setCurrentWeight}/>
+      {/* <WeightSelector currentWeight={currentWeight} setCurrentWeight={setCurrentWeight}/> */}
+      <Weight  initialWeight={currentWeight} setCurrentWeight={setCurrentWeight}/>
     </>
   );
 

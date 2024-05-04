@@ -2,7 +2,7 @@ import React from "react";
 
 const Button = ({ children, disabled, clickHandler, style }) => {
   const defaultStyle = {
-    minWidth: "100px",
+    minWidth: "10px",
     height: "40px",
     backgroundColor: disabled ? '#DCE1E8' : '#0F67FE',
     ...style,
