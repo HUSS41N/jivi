@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-const AgeSelector = ({ initialAge = 18, minAge = 0, maxAge = 120 }) => {
-  const [age, setAge] = useState(initialAge);
+const AgeSelector = ({ minAge = 0, maxAge = 120 ,age, setAge}) => {
 
   const handleAgeChange = (e) => {
     const newAge = parseInt(e.target.value, 10);

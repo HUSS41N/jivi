@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
 const WeightSelector = ({
-  initialWeight = 70,
   minWeight = 0,
+  currentWeight,
+  setCurrentWeight,
   maxWeight = 140,
 }) => {
-  const [currentWeight, setCurrentWeight] = useState(initialWeight);
   const [unit, setUnit] = useState("kg"); // default unit is kg
 
   const handleWeightChange = (e) => {

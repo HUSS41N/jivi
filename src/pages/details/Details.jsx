@@ -11,6 +11,7 @@ import WeightSelector from "../../components/WeightSelector/WeightSelector";
 import AgeSelector from "../../components/AgeSelector/AgeSelector";
 import "./details.scss";
 import VoiceRecorder from "../../components/VoiceRecorder/VoiceRecorder";
+import Preview from "../../components/Preview/Preview";
 const Details = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [heartRate, setHeartRate] = useState(80);
@@ -18,6 +19,8 @@ const Details = () => {
   const [anotherBloodPressure, setAnotherBloodPressure] = useState(70);
   const [userName, setUserName] = useState("");
   const [dob, setDob] = useState("");
+  const [age, setAge] = useState(18);
+  const [currentWeight, setCurrentWeight] = useState(70);
   const [gender, setGender] = useState("Male");
   const [recordedData, setRecordedData] = useState("");
   const [isRecording, setIsRecording] = useState(false);
@@ -85,13 +88,13 @@ const Details = () => {
 
   const StepTwo = () => (
     <>
-      <WeightSelector />
+      <WeightSelector currentWeight={currentWeight} setCurrentWeight={setCurrentWeight}/>
     </>
   );
 
   const StepThree = () => (
     <>
-      <AgeSelector />
+      <AgeSelector  age={age} setAge={setAge}/>
     </>
   );
 
@@ -105,7 +108,19 @@ const Details = () => {
     </>
   );
 
-  const StepFive = () => <>5</>;
+  const StepFive = () => (
+    <Preview
+      userName={userName}
+      age={age}
+      weight={currentWeight}
+      heartRate={heartRate}
+      bloodPressure={bloodPressure}
+      anotherBloodPressure={anotherBloodPressure}
+      dob={dob}
+      gender={gender}
+      recordedData={recordedData}
+    />
+  );
 
   return (
     <div className="details-container max-w-xs w-full flex flex-col justify-between p-2">
