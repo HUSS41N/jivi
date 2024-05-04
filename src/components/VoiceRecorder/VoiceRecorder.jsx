@@ -57,7 +57,7 @@ const VoiceRecorder = ({ setRecordedData }) => {
       container.appendChild(link);
     });
 
-    record.current.on("record-progress", ({ time }) => {
+    record.current.on("record-progress", (time) => {
       updateProgress(time);
     });
 
@@ -104,11 +104,10 @@ const VoiceRecorder = ({ setRecordedData }) => {
 
   return (
     <div className="">
-      <h1 className="text-xl font-bold details-header">Record your custom message.</h1>
-      <div
-        ref={waveformRef}
-        className="wavesurfer"
-      ></div>
+      <h1 className="text-xl font-bold details-header">
+        Record your custom message.
+      </h1>
+      <div ref={waveformRef} className="wavesurfer"></div>
       <div className="flex flex-col justify-between  items-center">
         <img
           src={!isRecording ? RecordStart : RecordEnd}
@@ -117,6 +116,18 @@ const VoiceRecorder = ({ setRecordedData }) => {
           width={"120px"}
           onClick={handleRecordClick}
         />
+        <div>
+          {!isRecording ? (
+            <p className="font-semibold text-lg text-recording leading-recording tracking-tightest text-start-recording mt-10">
+              Press to START recording
+            </p>
+          ) : (
+            <p className="font-semibold text-lg text-recording leading-recording tracking-tightest text-stop-recording mt-10">
+              Press to STOP recording
+            </p>
+          )}
+        </div>
+        {isRecording ? <p className="font-semibold text-lg text-recording leading-recording tracking-tightest text-stop-recording">{progressTime}</p> : null}
 
         {/* <select
           onChange={(e) => setSelectedDeviceId(e.target.value)}
@@ -131,7 +142,7 @@ const VoiceRecorder = ({ setRecordedData }) => {
             </option>
           ))}
         </select> */}
-        <div id="recordings" style={{ margin: "1rem 0",height:0}}></div>
+        <div id="recordings" style={{ margin: "1rem 0", height: 0 }}></div>
       </div>
     </div>
   );
