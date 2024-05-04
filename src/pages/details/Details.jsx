@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import RangeSlider from "../../components/RangeSlider/RangeSlider";
+import InputText from "../../components/InputText/InputText";
+import UserIcon from "../../assets/user.svg";
 const Details = () => {
   const [heartRate, setHeartRate] = useState(0);
   const [bloodPressure, setBloodPressure] = useState(0);
   const [anotherBloodPressure, setAnotherBloodPressure] = useState(0);
+  const [userName,setUserName] = useState("")
   return (
     <div>
       <RangeSlider
@@ -26,6 +29,13 @@ const Details = () => {
         max={80}
         value={anotherBloodPressure}
         setValue={setAnotherBloodPressure}
+      />
+       <InputText
+        label="Username"
+        icon={UserIcon} 
+        val={userName}
+        setVal={setUserName}
+        placeholder="Please enter your name"
       />
     </div>
   );
