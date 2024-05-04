@@ -6,18 +6,29 @@ import CalendarIcon from "../../assets/calendar.svg";
 import GenderIcon from "../../assets/gender.svg";
 import DateOfBirthInput from "../../components/DateOfBirthInput/DateOfBirthInput";
 import SelectInput from "../../components/SelectInput/SelectInput";
+import Button from "../../components/Button/Button";
 const Details = () => {
-  const [heartRate, setHeartRate] = useState(0);
-  const [bloodPressure, setBloodPressure] = useState(0);
-  const [anotherBloodPressure, setAnotherBloodPressure] = useState(0);
+  const [heartRate, setHeartRate] = useState(80);
+  const [bloodPressure, setBloodPressure] = useState(140);
+  const [anotherBloodPressure, setAnotherBloodPressure] = useState(70);
   const [userName, setUserName] = useState("");
   const [dob, setDob] = useState("");
-  const [gender,setGender] = useState("Male")
+  const [gender, setGender] = useState("Male");
   const options = [
-    { value: 'male', label: 'Male' },
-    { value: 'female', label: 'Female' },
-    { value: 'other', label: 'Other' },
+    { value: "male", label: "Male" },
+    { value: "female", label: "Female" },
+    { value: "other", label: "Other" },
   ];
+
+  const handleClick = () => {
+    console.log("Button was clicked!");
+  };
+
+  const customButtonStyles = {
+    width: "100%",
+    height: "50px",
+    marginTop: "10px",
+  };
 
   return (
     <div>
@@ -56,7 +67,7 @@ const Details = () => {
         setVal={setDob}
         placeholder="Select your date of birth"
       />
-        <SelectInput
+      <SelectInput
         label="Gender"
         icon={GenderIcon}
         val={gender}
@@ -64,6 +75,13 @@ const Details = () => {
         options={options}
         placeholder="Select a Gender"
       />
+      <Button
+        clickHandler={handleClick}
+        disabled={true}
+        style={customButtonStyles}
+      >
+        Next
+      </Button>
     </div>
   );
 };
