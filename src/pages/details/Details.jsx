@@ -126,7 +126,7 @@ const Details = () => {
   );
 
   return (
-    <div className="details-container max-w-xs w-full flex flex-col justify-between p-2">
+    <div className="details-container max-w-xs w-full flex flex-col justify-between">
       <div>
         {currentStep === 1 && <StepOne />}
         {currentStep === 2 && <StepTwo />}

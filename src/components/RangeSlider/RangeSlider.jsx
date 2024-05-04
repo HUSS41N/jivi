@@ -13,7 +13,9 @@ function debounce(func, wait) {
 }
 const RangeSlider = ({ label, min, max, value, setValue, style }) => {
   const [sliderValue, setSliderValue] = useState(value);
-  const debouncedSetSliderValue = useCallback(debounce(setValue, 300), [setValue]);
+  const debouncedSetSliderValue = useCallback(debounce(setValue, 300), [
+    setValue,
+  ]);
 
   useEffect(() => {
     setSliderValue(value);
@@ -31,9 +33,8 @@ const RangeSlider = ({ label, min, max, value, setValue, style }) => {
     height: "8px",
   };
 
-  // Set the CSS variable for thumb color
   const sliderStyles = {
-    '--thumb-color': style?.thumbColor || '#FA4D5E', // Default or passed thumb color
+    "--thumb-color": style?.thumbColor || "#FA4D5E",
     position: "absolute",
     top: -5,
     zIndex: 3,
@@ -43,12 +44,17 @@ const RangeSlider = ({ label, min, max, value, setValue, style }) => {
   };
 
   return (
-    <div className="space-y-2">
-      <label htmlFor="range-slider" className="block text-sm font-medium text-gray-700">
-        {label}
+    <div className="space-y-2 my-3">
+      <label
+        htmlFor="range-slider"
+        className="block text-sm font-medium text-gray-700"
+      >
+        <strong>{label} </strong>
       </label>
       <div className="relative w-full" style={{ height: trackStyle.height }}>
-        <div style={{ ...trackStyle, position: "absolute", width: "100%" }}></div>
+        <div
+          style={{ ...trackStyle, position: "absolute", width: "100%" }}
+        ></div>
         <div style={{ ...highlightTrackStyle, position: "absolute" }}></div>
         <input
           type="range"
@@ -71,7 +77,7 @@ const RangeSlider = ({ label, min, max, value, setValue, style }) => {
             top: "25px",
           }}
         >
-          {sliderValue}
+          <strong>{sliderValue}</strong>
         </div>
       </div>
       <div className="relative mt-2">

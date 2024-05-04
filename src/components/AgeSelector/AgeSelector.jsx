@@ -18,7 +18,7 @@ const AgeSelector = ({ minAge = 0, maxAge = 120 ,age, setAge}) => {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-4 p-4">
+    <div className="flex flex-col items-center space-y-4 p-4 my-3">
       <h1 className="text-xl font-bold">What is your age?</h1>
       <div className="flex items-center space-x-3">
         <button

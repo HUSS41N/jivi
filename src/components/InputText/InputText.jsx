@@ -2,7 +2,7 @@ import React from "react";
 
 const InputText = ({ label, icon, val, setVal, placeholder }) => {
   return (
-    <div className="flex flex-col space-y-1">
+    <div className="flex flex-col space-y-1 my-3">
       {label && (
         <label className="text-sm font-semibold text-gray-700">{label}</label>
       )}
