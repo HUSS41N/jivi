@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 
 const Preview = ({
   userName,
@@ -9,10 +9,18 @@ const Preview = ({
   gender,
   weight,
   recordedData,
-  age
+  age,
 }) => {
+  const [audioUrl,setAudioUrl] = useState("")
+  // Convert Blob to URL for the audio tag
+  useEffect(()=>{
+    if(!recordedData) return
+    setAudioUrl(URL.createObjectURL(recordedData))
+  },[recordedData])
+
+
   return (
-    <div className="">
+    <div className="p-4">
       <p className="mb-4">Please confirm your details to continue.</p>
       <div className="space-y-2">
         <div><span className="font-bold w-32 inline-block">HeartRate:</span> <span>{heartRate}</span></div>
@@ -24,7 +32,14 @@ const Preview = ({
         <div><span className="font-bold w-32 inline-block">Gender:</span> <span>{gender}</span></div>
         <div><span className="font-bold w-32 inline-block">Weight:</span> <span>{weight}</span></div>
         <div><span className="font-bold w-32 inline-block">Age:</span> <span>{age}</span></div>
-        <div><span className="font-bold w-32 inline-block">Custom message:</span> <span>{recordedData}</span></div>
+        <div>
+          <span className="font-bold w-32 inline-block">Custom message:</span>
+          {audioUrl && (
+            <audio controls src={audioUrl} className="mt-2">
+              Your browser does not support the audio element.
+            </audio>
+          )}
+        </div>
       </div>
     </div>
   );
