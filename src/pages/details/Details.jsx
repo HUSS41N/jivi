@@ -9,8 +9,9 @@ import SelectInput from "../../components/SelectInput/SelectInput";
 import Button from "../../components/Button/Button";
 import WeightSelector from "../../components/WeightSelector/WeightSelector";
 import AgeSelector from "../../components/AgeSelector/AgeSelector";
-
+import "./details.scss"
 const Details = () => {
+  const [currentStep, setCurrentStep] = useState(1);
   const [heartRate, setHeartRate] = useState(80);
   const [bloodPressure, setBloodPressure] = useState(140);
   const [anotherBloodPressure, setAnotherBloodPressure] = useState(70);
@@ -23,18 +24,16 @@ const Details = () => {
     { value: "other", label: "Other" },
   ];
 
-  const handleClick = () => {
-    console.log("Button was clicked!");
+  const handleClickNext = () => {
+    if (currentStep < 3) setCurrentStep(currentStep + 1);
   };
 
-  const customButtonStyles = {
-    width: "100%",
-    height: "50px",
-    marginTop: "10px",
+  const handleClickBack = () => {
+    if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
 
-  return (
-    <div>
+  const StepOne = () => (
+    <>
       <RangeSlider
         label="Heart Rate"
         min={60}
@@ -50,7 +49,7 @@ const Details = () => {
         setValue={setBloodPressure}
       />
       <RangeSlider
-        label=""
+        label="Other Blood Pressure"
         min={60}
         max={80}
         value={anotherBloodPressure}
@@ -78,15 +77,57 @@ const Details = () => {
         options={options}
         placeholder="Select a Gender"
       />
+    </>
+  );
+
+  const StepTwo = () => (
+    <>
       <WeightSelector />
+    </>
+  );
+
+  const StepThree = () => (
+    <>
       <AgeSelector />
-      <Button
-        clickHandler={handleClick}
-        disabled={true}
-        style={customButtonStyles}
-      >
-        Next
-      </Button>
+    </>
+  );
+
+  return (
+    <div className="details-container max-w-xs w-full flex flex-col justify-between p-2">
+      <div>
+        {currentStep === 1 && <StepOne />}
+        {currentStep === 2 && <StepTwo />}
+        {currentStep === 3 && <StepThree />}
+      </div>
+      <div className="flex flex-col space-y-4 mt-4">
+        {currentStep > 1 && (
+          <Button
+            clickHandler={handleClickBack}
+            style={{
+              width: "100%",
+              height: "50px",
+              backgroundColor: "#DCE1E8",
+            }}
+          >
+            Back
+          </Button>
+        )}
+        {currentStep < 3 ? (
+          <Button
+            clickHandler={handleClickNext}
+            style={{ width: "100%", height: "50px" }}
+          >
+            Next
+          </Button>
+        ) : (
+          <Button
+            clickHandler={() => console.log("Submit Final Data")}
+            style={{ width: "100%", height: "50px" }}
+          >
+            Submit
+          </Button>
+        )}
+      </div>
     </div>
   );
 };
