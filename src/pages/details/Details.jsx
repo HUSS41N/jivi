@@ -140,7 +140,7 @@ const Details = () => {
       <VoiceRecorder
         isRecording={isRecording}
         setIsRecording={setIsRecording}
-        setRecordedData={()=>dispatch(setRecordedData())}
+        setRecordedData={setRecordedData}
       />
     </>
   );
