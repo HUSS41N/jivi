@@ -6,32 +6,35 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import Details from "./pages/details/Details";
+import {store} from "./redux/store"
+import { Provider } from "react-redux";
 import Layout from "./components/Layout/Layout";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {RoutesConfig &&
-          RoutesConfig.length > 0 &&
-          RoutesConfig.map((comp) => {
-            const { path, component: Component, children } = comp;
-            return (
-              <Route
-                exact
-                key={path}
-                path={path}
-                element={
-                  <Layout heading={comp.heading}>
-                    <Component children={children} />
-                  </Layout>
-                }
-              />
-            );
-          })}
-      </Routes>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          {RoutesConfig &&
+            RoutesConfig.length > 0 &&
+            RoutesConfig.map((comp) => {
+              const { path, component: Component, children } = comp;
+              return (
+                <Route
+                  exact
+                  key={path}
+                  path={path}
+                  element={
+                    <Layout heading={comp.heading}>
+                      <Component children={children} />
+                    </Layout>
+                  }
+                />
+              );
+            })}
+        </Routes>
+      </Router>
+    </Provider>
   );
 }
 

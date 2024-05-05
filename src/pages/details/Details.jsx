@@ -14,16 +14,15 @@ import Preview from "../../components/Preview/Preview";
 import Weight from "../../components/WeightSelector/Weight";
 import UserService from "../../services/User";
 import { useNavigate } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
+import { setUserName, setDob, setAge, setCurrentWeight, setHeartRate, setBloodPressure, setAnotherBloodPressure } from "../../redux/slices/UserSlice";
 const Details = () => {
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state);
+  const { userName, dob, age, currentWeight, heartRate, bloodPressure, anotherBloodPressure } = user;
+  console.log("State ", user);
+  const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(1);
-  const [heartRate, setHeartRate] = useState(80);
-  const [bloodPressure, setBloodPressure] = useState(140);
-  const [anotherBloodPressure, setAnotherBloodPressure] = useState(70);
-  const [userName, setUserName] = useState("Hussain");
-  const [dob, setDob] = useState("");
-  const [age, setAge] = useState(24);
-  const [currentWeight, setCurrentWeight] = useState(70);
   const [gender, setGender] = useState("Male");
   const [recordedData, setRecordedData] = useState("");
   const [isRecording, setIsRecording] = useState(false);
@@ -90,7 +89,7 @@ const Details = () => {
         min={120}
         max={150}
         value={bloodPressure}
-        setValue={setBloodPressure}
+        setValue={()=>dispatch(setBloodPressure())}
         style={{ highlightColor: "#FA4D5E" }}
       />
       <RangeSlider
@@ -98,28 +97,26 @@ const Details = () => {
         min={60}
         max={80}
         value={anotherBloodPressure}
-        setValue={setAnotherBloodPressure}
+        setValue={()=>dispatch(setAnotherBloodPressure())}
         style={{ highlightColor: "#FA4D5E" }}
       />
       <InputText
         label="Username"
         icon={UserIcon}
         val={userName}
-        setVal={setUserName}
+        setVal={()=>dispatch(setUserName())}
         placeholder="Please enter your name"
       />
       <DateOfBirthInput
         label="Date of Birth"
         icon={CalendarIcon}
-        val={dob}
-        setVal={setDob}
         placeholder="Select your date of birth"
       />
       <SelectInput
         label="Gender"
         icon={GenderIcon}
         val={gender}
-        setVal={setGender}
+        setValue={()=>dispatch(setGender())}
         options={options}
         placeholder="Select a Gender"
       />
@@ -130,14 +127,14 @@ const Details = () => {
     <>
       <Weight
         initialWeight={currentWeight}
-        setCurrentWeight={setCurrentWeight}
+        setCurrentWeight={()=>dispatch(setCurrentWeight())}
       />
     </>
   );
 
   const StepThree = () => (
     <>
-      <AgeSelector age={age} setAge={setAge} />
+      <AgeSelector age={age} setAge={()=>dispatch(setAge())} />
     </>
   );
 
@@ -146,7 +143,7 @@ const Details = () => {
       <VoiceRecorder
         isRecording={isRecording}
         setIsRecording={setIsRecording}
-        setRecordedData={setRecordedData}
+        setRecordedData={()=>dispatch(setRecordedData())}
       />
     </>
   );
@@ -188,7 +185,7 @@ const Details = () => {
             style={{ width: "100%", height: "70px" }}
             disabled={isSubmitting}
           >
-             {isSubmitting ? 'Submitting...' : 'Submit'}
+            {isSubmitting ? "Submitting..." : "Submit"}
           </Button>
         )}
         {currentStep > 1 && (
