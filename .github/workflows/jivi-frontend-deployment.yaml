@@ -1,0 +1,47 @@
+name: Jivi Frontend Dev Deployment
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    name: Build image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Node setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.13.2
+
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: npm install
+        run: npm cache clean --force && npm i
+
+      - name: config set
+        run: export NODE_OPTIONS="--max-old-space-size=8192"
+      - name: source set
+        run: export GENERATE_SOURCEMAP=false
+
+      - name: build-dev
+        run: ls && CI=false npm run build-dev
+
+      - name: copy files to s3
+        run: aws s3 sync ./dist aws://jivi.s3.us-east-2.amazonaws.com
+
+      - name: Invalidate cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id SOME-DISTRIBUTION-ID \
+            --paths "/*"
