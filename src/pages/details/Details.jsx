@@ -159,19 +159,7 @@ const Details = () => {
     </>
   );
 
-  const StepFive = () => (
-    <Preview
-      userName={userName}
-      age={age}
-      weight={currentWeight}
-      heartRate={heartRate}
-      bloodPressure={bloodPressure}
-      anotherBloodPressure={anotherBloodPressure}
-      dob={dob}
-      gender={gender}
-      recordedData={recordedData}
-    />
-  );
+  const StepFive = () => <Preview recordedData={recordedData} />;
 
   return (
     <div className="details-container w-full flex flex-col justify-between">
