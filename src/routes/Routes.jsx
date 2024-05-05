@@ -4,7 +4,7 @@ import Landing from "../pages/landing/Landing";
 export const RoutesConfig = [
   {
     component: Landing,
-    path: "/landing",
+    path: "/",
     exact: true,
     heading:"Landing",
   },
