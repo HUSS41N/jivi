@@ -23,7 +23,7 @@ export const userSlice = createSlice({
       state.bloodPressure = action.payload;
     },
     setAnotherBloodPressure: (state, action) => {
-      state.bloodPressure = action.payload;
+      state.anotherBloodPressure = action.payload;
     },
     setUserName: (state, action) => {
       state.userName = action.payload;

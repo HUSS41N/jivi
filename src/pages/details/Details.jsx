@@ -89,7 +89,7 @@ const Details = () => {
         min={120}
         max={150}
         value={bloodPressure}
-        setValue={()=>dispatch(setBloodPressure())}
+        setValue={setBloodPressure}
         style={{ highlightColor: "#FA4D5E" }}
       />
       <RangeSlider
@@ -97,7 +97,7 @@ const Details = () => {
         min={60}
         max={80}
         value={anotherBloodPressure}
-        setValue={()=>dispatch(setAnotherBloodPressure())}
+        setValue={setAnotherBloodPressure}
         style={{ highlightColor: "#FA4D5E" }}
       />
       <InputText
@@ -115,8 +115,6 @@ const Details = () => {
       <SelectInput
         label="Gender"
         icon={GenderIcon}
-        val={gender}
-        setValue={()=>dispatch(setGender())}
         options={options}
         placeholder="Select a Gender"
       />
