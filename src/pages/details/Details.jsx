@@ -20,7 +20,7 @@ const Details = () => {
   const [heartRate, setHeartRate] = useState(80);
   const [bloodPressure, setBloodPressure] = useState(140);
   const [anotherBloodPressure, setAnotherBloodPressure] = useState(70);
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState("Hussain");
   const [dob, setDob] = useState("");
   const [age, setAge] = useState(24);
   const [currentWeight, setCurrentWeight] = useState(70);
