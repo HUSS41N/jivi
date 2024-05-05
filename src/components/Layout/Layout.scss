@@ -1,19 +1,22 @@
 .separator {
   background-color: #edf5ff !important;
   height: 2px;
-  width: 330px;
+  max-width: 50rem;
   margin-top: 10px;
+  margin: auto;
 }
 .layout-container {
   position: relative;
   .header {
-    text-align: center;
+    width: 50rem;
+    margin: auto;
+    text-align: left;
     padding: 1rem 0;
     background-color: white;
   }
   .content-container {
     margin-top: 4rem;
-    width: 100%;
+    width: 50rem;
     height: calc(100vh - 4rem);
     overflow-y: auto;
   }
