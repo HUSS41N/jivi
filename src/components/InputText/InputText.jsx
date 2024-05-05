@@ -1,6 +1,6 @@
 import React from "react";
 
-const InputText = ({ label, icon, val, setVal, placeholder }) => {
+const InputText = ({ label, icon, val, setVal, placeholder,validateStepOne }) => {
   return (
     <div className="flex flex-col space-y-1 my-5">
       {label && (
@@ -15,6 +15,8 @@ const InputText = ({ label, icon, val, setVal, placeholder }) => {
           placeholder={placeholder}
           className="flex-1 outline-none bg-custom-bg placeholder-custom-placeholder h-10" 
         />
+
+        {!validateStepOne() && val === ''  && <span className="absolute text-custom-placeholder ml-8 pointer-events-none">This field is required</span>}
       </div>
     </div>
   );

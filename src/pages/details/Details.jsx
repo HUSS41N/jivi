@@ -15,12 +15,25 @@ import Weight from "../../components/WeightSelector/Weight";
 import UserService from "../../services/User";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { setUserName, setHeartRate, setBloodPressure, setAnotherBloodPressure } from "../../redux/slices/UserSlice";
+import {
+  setUserName,
+  setHeartRate,
+  setBloodPressure,
+  setAnotherBloodPressure,
+} from "../../redux/slices/UserSlice";
 import { genderOptions } from "../../utils/user/user-utils";
 const Details = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state);
-  const { userName, dob, age, currentWeight, heartRate, bloodPressure, anotherBloodPressure } = user;
+  const {
+    userName,
+    dob,
+    age,
+    currentWeight,
+    heartRate,
+    bloodPressure,
+    anotherBloodPressure,
+  } = user;
   const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(1);
   const [gender, setGender] = useState("Male");
@@ -69,6 +82,12 @@ const Details = () => {
     }
   };
 
+  const validateStepOne = () => {
+    const validUserName = userName?.trim() !== "";
+    const validDateOfBirth = dob.trim() !== "";
+    return validDateOfBirth && validUserName;
+  };
+
   const StepOne = () => (
     <>
       <RangeSlider
@@ -99,12 +118,14 @@ const Details = () => {
         label="Username"
         icon={UserIcon}
         val={userName}
-        setVal={()=>dispatch(setUserName())}
+        setVal={() => dispatch(setUserName())}
+        validateStepOne={validateStepOne}
         placeholder="Please enter your name"
       />
       <DateOfBirthInput
         label="Date of Birth"
         icon={CalendarIcon}
+        validateStepOne={validateStepOne}
         placeholder="Select your date of birth"
       />
       <SelectInput
@@ -118,9 +139,7 @@ const Details = () => {
 
   const StepTwo = () => (
     <>
-      <Weight
-        initialWeight={currentWeight}
-      />
+      <Weight initialWeight={currentWeight} />
     </>
   );
 
@@ -168,6 +187,7 @@ const Details = () => {
           <Button
             clickHandler={handleClickNext}
             style={{ width: "100%", height: "70px" }}
+            disabled={!validateStepOne()}
           >
             Next
           </Button>
