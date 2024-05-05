@@ -1,7 +1,11 @@
 import React, { useState, useRef } from "react";
+import { useSelector,useDispatch } from "react-redux";
+import { setAge } from "../../redux/slices/UserSlice";
 import "./AgeSelector.scss";
 
-const AgeSelector = ({ minAge = 18, maxAge = 100, age, setAge }) => {
+const AgeSelector = ({ minAge = 18, maxAge = 100 }) => {
+  const dispatch = useDispatch();
+  const { age } = useSelector((state) => state.user);
   const [visibleCenter, setVisibleCenter] = useState(age);
   const intervalRef = useRef(null);
 
@@ -26,7 +30,7 @@ const AgeSelector = ({ minAge = 18, maxAge = 100, age, setAge }) => {
 
   const stopChangingAge = (selectedAge) => {
     if (intervalRef.current) {
-      setAge(selectedAge)
+      dispatch(setAge(selectedAge))
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
