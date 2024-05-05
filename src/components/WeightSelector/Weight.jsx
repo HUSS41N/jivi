@@ -84,7 +84,7 @@ const Weight = ({
           </span>
         </p>
       </div>
-      <div className="relative w-full flex items-center mt-20">
+      <div className="relative w-full flex items-center justify-center mt-20">
         <Button clickHandler={() => startChangingWeight(-1)} style={{ width: "50px", backgroundColor: "#ffffff", border: "none", color: "#DCE1E8", padding: "5px" }}>{"<"}</Button>
         <div className="flex items-center space-x-1 overflow-hidden">
           {visibleWeights.map((weight) => (
