@@ -11,7 +11,6 @@ import AgeSelector from "../../components/AgeSelector/AgeSelector";
 import "./details.scss";
 import VoiceRecorder from "../../components/VoiceRecorder/VoiceRecorder";
 import Preview from "../../components/Preview/Preview";
-import Weight from "../../components/WeightSelector/Weight";
 import UserService from "../../services/User";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
@@ -22,6 +21,7 @@ import {
   setAnotherBloodPressure,
 } from "../../redux/slices/UserSlice";
 import { genderOptions } from "../../utils/user/user-utils";
+import WeightSelectorSlick from "../../components/WeightSelector/WeightSelectorSlick";
 const Details = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state);
@@ -139,7 +139,7 @@ const Details = () => {
 
   const StepTwo = () => (
     <>
-      <Weight initialWeight={currentWeight} />
+      <WeightSelectorSlick initialWeight={currentWeight} />
     </>
   );
 
