@@ -1,34 +1,34 @@
-import React, { useState, useEffect, useRef,useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Button from "../Button/Button";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentWeight } from "../../redux/slices/UserSlice";
 import "./WeightSelector.scss";
 
-const Weight = ({
-  initialWeight = 68,
-  initialUnit = "lbs",
-  minWeight = 0,
-  maxWeight = 140,
-  setCurrentWeight,
-}) => {
+const Weight = ({ initialUnit = "lbs", minWeight = 0, maxWeight = 140 }) => {
+  const { currentWeight } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const [unit, setUnit] = useState(initialUnit);
-  const [visibleCenter, setVisibleCenter] = useState(initialWeight);
+  const [visibleCenter, setVisibleCenter] = useState(currentWeight);
   const intervalRef = useRef(null);
 
   useEffect(() => {
-    setCurrentWeight(visibleCenter);
+    dispatch(setCurrentWeight(visibleCenter));
   }, [visibleCenter]);
 
-  // useEffect(() => {
-  //   const convertedWeight = convertWeight(visibleCenter, initialUnit, unit);
-  //   setVisibleCenter(convertedWeight);
-  // }, [unit]); 
+  useEffect(() => {
+    const convertedWeight = convertWeight(visibleCenter, initialUnit, unit);
+    setVisibleCenter(convertedWeight);
+  }, [unit]);
 
   const convertWeight = (weight, fromUnit, toUnit) => {
     if (fromUnit === toUnit) return weight;
-    return toUnit === "kg" ? Math.round(weight / 2.20462) : Math.round(weight * 2.20462);
+    return toUnit === "kg"
+      ? Math.round(weight / 2.20462)
+      : Math.round(weight * 2.20462);
   };
 
   const toggleUnit = useCallback(() => {
-    setUnit(prevUnit => (prevUnit === "kg" ? "lbs" : "kg"));
+    setUnit((prevUnit) => (prevUnit === "kg" ? "lbs" : "kg"));
   }, [unit]);
 
   const getDisplayWeight = () => {
@@ -36,9 +36,9 @@ const Weight = ({
   };
 
   const handlePrevNext = (change) => {
-    setVisibleCenter(prev => {
+    setVisibleCenter((prev) => {
       const newCenter = Math.max(minWeight, Math.min(maxWeight, prev + change));
-      setCurrentWeight(newCenter);
+      dispatch(setCurrentWeight(newCenter));
       return newCenter;
     });
   };
@@ -62,17 +62,24 @@ const Weight = ({
     borderRadius: "10px",
     border: unit === metric ? "5px solid #EDF5FF" : "none",
     color: unit !== metric ? "#5D6A85" : undefined,
-    marginTop: "20px"
+    marginTop: "20px",
   });
 
-  const visibleWeights = Array.from({ length: 31 }, (_, i) => visibleCenter - 15 + i);
+  const visibleWeights = Array.from(
+    { length: 31 },
+    (_, i) => visibleCenter - 15 + i
+  );
 
   return (
     <div className="flex flex-col space-y-4 mt-4">
       <h1 className="text-xl font-bold">What is your weight?</h1>
       <div className="flex justify-between items-center mb-10">
-        <Button clickHandler={toggleUnit} style={buttonStyle("lbs")}>Lbs</Button>
-        <Button clickHandler={toggleUnit} style={buttonStyle("kg")}>Kg</Button>
+        <Button clickHandler={toggleUnit} style={buttonStyle("lbs")}>
+          Lbs
+        </Button>
+        <Button clickHandler={toggleUnit} style={buttonStyle("kg")}>
+          Kg
+        </Button>
       </div>
       <div className="text-center mt-10">
         <p className="flex justify-center items-center mt-10">
@@ -85,7 +92,18 @@ const Weight = ({
         </p>
       </div>
       <div className="relative w-full flex items-center justify-center mt-20">
-        <Button clickHandler={() => startChangingWeight(-1)} style={{ width: "50px", backgroundColor: "#ffffff", border: "none", color: "#DCE1E8", padding: "5px" }}>{"<"}</Button>
+        <Button
+          clickHandler={() => startChangingWeight(-1)}
+          style={{
+            width: "50px",
+            backgroundColor: "#ffffff",
+            border: "none",
+            color: "#DCE1E8",
+            padding: "5px",
+          }}
+        >
+          {"<"}
+        </Button>
         <div className="flex items-center space-x-1 overflow-hidden">
           {visibleWeights.map((weight) => (
             <div
@@ -93,15 +111,30 @@ const Weight = ({
               className={`h-6 border-t border-gray-300 ${
                 weight % 5 === 0 ? "buzz-weight" : "weights"
               } ${weight === visibleCenter ? "selected-weight" : ""}`}
-              onMouseDown={() => startChangingWeight(weight > visibleCenter ? 1 : -1)}
+              onMouseDown={() =>
+                startChangingWeight(weight > visibleCenter ? 1 : -1)
+              }
               onMouseUp={stopChangingWeight}
               onMouseLeave={stopChangingWeight}
-              onTouchStart={() => startChangingWeight(weight > visibleCenter ? 1 : -1)}
+              onTouchStart={() =>
+                startChangingWeight(weight > visibleCenter ? 1 : -1)
+              }
               onTouchEnd={stopChangingWeight}
             ></div>
           ))}
         </div>
-        <Button clickHandler={() => startChangingWeight(1)} style={{ width: "50px", backgroundColor: "#ffffff", border: "none", color: "#DCE1E8", padding: "5px" }}>{">"}</Button>
+        <Button
+          clickHandler={() => startChangingWeight(1)}
+          style={{
+            width: "50px",
+            backgroundColor: "#ffffff",
+            border: "none",
+            color: "#DCE1E8",
+            padding: "5px",
+          }}
+        >
+          {">"}
+        </Button>
       </div>
     </div>
   );

@@ -20,7 +20,6 @@ const Details = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state);
   const { userName, dob, age, currentWeight, heartRate, bloodPressure, anotherBloodPressure } = user;
-  console.log("State ", user);
   const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(1);
   const [gender, setGender] = useState("Male");
