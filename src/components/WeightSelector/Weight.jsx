@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Button from "../Button/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentWeight } from "../../redux/slices/UserSlice";
+import { convertWeight } from "../../utils/user/user-utils";
 import "./WeightSelector.scss";
 
 const Weight = ({ initialUnit = "lbs", minWeight = 0, maxWeight = 140 }) => {
@@ -20,12 +21,6 @@ const Weight = ({ initialUnit = "lbs", minWeight = 0, maxWeight = 140 }) => {
     setVisibleCenter(convertedWeight);
   }, [unit]);
 
-  const convertWeight = (weight, fromUnit, toUnit) => {
-    if (fromUnit === toUnit) return weight;
-    return toUnit === "kg"
-      ? Math.round(weight / 2.20462)
-      : Math.round(weight * 2.20462);
-  };
 
   const toggleUnit = useCallback(() => {
     setUnit((prevUnit) => (prevUnit === "kg" ? "lbs" : "kg"));

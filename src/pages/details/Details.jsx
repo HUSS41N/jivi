@@ -15,7 +15,8 @@ import Weight from "../../components/WeightSelector/Weight";
 import UserService from "../../services/User";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { setUserName, setDob, setAge, setCurrentWeight, setHeartRate, setBloodPressure, setAnotherBloodPressure } from "../../redux/slices/UserSlice";
+import { setUserName, setHeartRate, setBloodPressure, setAnotherBloodPressure } from "../../redux/slices/UserSlice";
+import { genderOptions } from "../../utils/user/user-utils";
 const Details = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state);
@@ -26,11 +27,6 @@ const Details = () => {
   const [recordedData, setRecordedData] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const options = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-    { value: "other", label: "Other" },
-  ];
 
   const handleClickNext = () => {
     if (currentStep < 5) setCurrentStep(currentStep + 1);
@@ -114,7 +110,7 @@ const Details = () => {
       <SelectInput
         label="Gender"
         icon={GenderIcon}
-        options={options}
+        options={genderOptions}
         placeholder="Select a Gender"
       />
     </>
@@ -124,14 +120,13 @@ const Details = () => {
     <>
       <Weight
         initialWeight={currentWeight}
-        setCurrentWeight={()=>dispatch(setCurrentWeight())}
       />
     </>
   );
 
   const StepThree = () => (
     <>
-      <AgeSelector age={age} setAge={()=>dispatch(setAge())} />
+      <AgeSelector age={age} />
     </>
   );
 

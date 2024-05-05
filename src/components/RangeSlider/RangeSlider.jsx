@@ -1,19 +1,10 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { debounce } from "../../utils/user/user-utils";
 import "./RangeSlider.scss";
 
 const RangeSlider = ({ label, min, max, value, setValue, style }) => {
   const dispatch = useDispatch();
-  function debounce(func, wait) {
-    let timeout;
-    return function (...args) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        console.log(func);
-        dispatch(func(...args));
-      }, wait);
-    };
-  }
 
   const [sliderValue, setSliderValue] = useState(value);
   const debouncedSetSliderValue = useCallback(debounce(setValue, 300), [

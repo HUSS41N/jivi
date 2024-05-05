@@ -12,7 +12,7 @@ const Preview = ({
   age,
 }) => {
   const [audioUrl,setAudioUrl] = useState("")
-  // Convert Blob to URL for the audio tag
+  
   useEffect(()=>{
     if(!recordedData) return
     setAudioUrl(URL.createObjectURL(recordedData))
