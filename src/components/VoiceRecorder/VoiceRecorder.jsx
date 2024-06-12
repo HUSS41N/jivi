@@ -21,6 +21,7 @@ const VoiceRecorder = ({ setRecordedData }) => {
   const progressIntervalRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
+  const accumulatedChunksRef = useRef([]);
   const startTimeRef = useRef(null);
 
   useEffect(() => {
@@ -56,7 +57,7 @@ const VoiceRecorder = ({ setRecordedData }) => {
     mediaRecorderRef.current = new MediaRecorder(stream, { mimeType: 'audio/webm', audioBitsPerSecond: 128000 });
     mediaRecorderRef.current.ondataavailable = handleDataAvailable;
     mediaRecorderRef.current.onstop = handleRecordingStop;
-    mediaRecorderRef.current.start(2500); // Capture audio in 250ms chunks
+    mediaRecorderRef.current.start(2500); // Capture audio in 2500ms chunks
 
     setIsRecording(true);
     startTimeRef.current = Date.now();
@@ -118,8 +119,9 @@ const VoiceRecorder = ({ setRecordedData }) => {
   };
 
   const handleRecordingStop = () => {
-    const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
+    const blob = new Blob(accumulatedChunksRef.current, { type: 'audio/webm' });
     chunksRef.current = [];
+    accumulatedChunksRef.current = []; // Reset accumulated chunks after recording stop
     setRecordedData(blob);
 
     const recordedUrl = URL.createObjectURL(blob);
@@ -134,13 +136,14 @@ const VoiceRecorder = ({ setRecordedData }) => {
   const handleDataAvailable = (event) => {
     if (event.data.size > 0) {
       chunksRef.current.push(event.data);
+      accumulatedChunksRef.current.push(event.data); // Accumulate chunks
       handleRecordingChunk(event.data);
     }
   };
 
   const handleRecordingChunk = (data) => {
     if (data instanceof Blob) {
-      convertToBase64(data, (base64Audio) => {
+      convertToBase64(new Blob(accumulatedChunksRef.current, { type: 'audio/webm' }), (base64Audio) => {
         const base64WithPrefix = `data:audio/webm;codecs=opus;base64,${base64Audio}`;
         transcribeApiHandler(base64WithPrefix);
       });
@@ -163,7 +166,7 @@ const VoiceRecorder = ({ setRecordedData }) => {
       const res = await UserService.transcribeUserData(data);
       if (res?.data?.data) {
         setResponse(res);
-        setTranscription(prev => res.data.data.text || prev);
+        setTranscription(prev => prev + " " + (res.data.data.text || ""));
       }
     } catch (error) {
       console.error('Error transcribing audio:', error);
