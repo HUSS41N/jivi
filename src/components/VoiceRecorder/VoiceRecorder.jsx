@@ -1,14 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
+import UserService from "../../services/User";
 import RecordStart from "../../assets/recordStart.svg";
 import RecordEnd from "../../assets/recordEnd.svg";
 
 const VoiceRecorder = ({ setRecordedData }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [progressTime, setProgressTime] = useState("00:00");
-  const [selectedDeviceId, setSelectedDeviceId] = useState("");
-  const [audioDevices, setAudioDevices] = useState([]);
   const [silenceCountdown, setSilenceCountdown] = useState(null);
   const [recordedAudioUrl, setRecordedAudioUrl] = useState(null);
+  const [response, setResponse] = useState({});
+  const [transcription, setTranscription] = useState("");
+  const [isTranscribing, setIsTranscribing] = useState(false);
+  const apiIntervalRef = useRef(null);
+
   const audioContextRef = useRef(null);
   const analyserRef = useRef(null);
   const dataArrayRef = useRef(null);
@@ -20,14 +24,14 @@ const VoiceRecorder = ({ setRecordedData }) => {
   const startTimeRef = useRef(null);
 
   useEffect(() => {
-    fetchAudioDevices();
-  }, []);
-
-  const fetchAudioDevices = async () => {
-    const devices = await navigator.mediaDevices.enumerateDevices();
-    const audioInputDevices = devices.filter(device => device.kind === 'audioinput');
-    setAudioDevices(audioInputDevices);
-  };
+    if (isRecording) {
+      apiIntervalRef.current = setInterval(() => {
+        handleRecordingChunk();
+      }, 2500);
+    } else {
+      clearInterval(apiIntervalRef.current);
+    }
+  }, [isRecording]);
 
   const updateProgress = () => {
     const currentTime = Date.now();
@@ -48,11 +52,11 @@ const VoiceRecorder = ({ setRecordedData }) => {
   };
 
   const startRecording = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: { deviceId: selectedDeviceId } });
-    mediaRecorderRef.current = new MediaRecorder(stream);
-    mediaRecorderRef.current.ondataavailable = event => chunksRef.current.push(event.data);
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorderRef.current = new MediaRecorder(stream, { mimeType: 'audio/webm', audioBitsPerSecond: 128000 });
+    mediaRecorderRef.current.ondataavailable = handleDataAvailable;
     mediaRecorderRef.current.onstop = handleRecordingStop;
-    mediaRecorderRef.current.start();
+    mediaRecorderRef.current.start(2500); // Capture audio in 250ms chunks
 
     setIsRecording(true);
     startTimeRef.current = Date.now();
@@ -74,8 +78,7 @@ const VoiceRecorder = ({ setRecordedData }) => {
         sum += amplitude * amplitude;
       }
       const rms = Math.sqrt(sum / bufferLength);
-      console.log("rms ", rms);
-      if (rms < 0.05) { 
+      if (rms < 0.05) {
         if (!silenceTimerRef.current) {
           setSilenceCountdown(5);
           silenceTimerRef.current = setInterval(() => {
@@ -103,9 +106,11 @@ const VoiceRecorder = ({ setRecordedData }) => {
     clearInterval(silenceTimerRef.current);
     clearInterval(checkSilenceIntervalRef.current);
     clearInterval(progressIntervalRef.current);
+    clearInterval(apiIntervalRef.current);
     silenceTimerRef.current = null;
     checkSilenceIntervalRef.current = null;
     progressIntervalRef.current = null;
+    apiIntervalRef.current = null;
     setSilenceCountdown(null);
     if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
       audioContextRef.current.close();
@@ -119,14 +124,60 @@ const VoiceRecorder = ({ setRecordedData }) => {
 
     const recordedUrl = URL.createObjectURL(blob);
     setRecordedAudioUrl(recordedUrl);
+
+    convertToBase64(blob, (base64Audio) => {
+      const base64WithPrefix = `data:audio/webm;codecs=opus;base64,${base64Audio}`;
+      transcribeApiHandler(base64WithPrefix);
+    });
+  };
+
+  const handleDataAvailable = (event) => {
+    if (event.data.size > 0) {
+      chunksRef.current.push(event.data);
+      handleRecordingChunk(event.data);
+    }
+  };
+
+  const handleRecordingChunk = (data) => {
+    if (data instanceof Blob) {
+      convertToBase64(data, (base64Audio) => {
+        const base64WithPrefix = `data:audio/webm;codecs=opus;base64,${base64Audio}`;
+        transcribeApiHandler(base64WithPrefix);
+      });
+    }
+  };
+
+  const convertToBase64 = (blob, callback) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result.split(',')[1];
+      callback(base64String);
+    };
+    reader.readAsDataURL(blob);
+  };
+
+  const transcribeApiHandler = async (base64Audio) => {
+    const data = { audio: base64Audio };
+    setIsTranscribing(true);
+    try {
+      const res = await UserService.transcribeUserData(data);
+      if (res?.data?.data) {
+        setResponse(res);
+        setTranscription(prev => res.data.data.text || prev);
+      }
+    } catch (error) {
+      console.error('Error transcribing audio:', error);
+    } finally {
+      setIsTranscribing(false);
+    }
   };
 
   return (
     <div className="">
       <h1 className="text-xl font-bold details-header">
-        Record your custom message.
+        {transcription}
       </h1>
-      <div className="flex flex-col justify-between  items-center mt-20">
+      <div className="flex flex-col justify-between items-center mt-20">
         <img
           src={!isRecording ? RecordStart : RecordEnd}
           alt="mic-icon"
